@@ -16,7 +16,6 @@ function App() {
   const [profileUrl, setProfileUrl] = useState("");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const [stage, setStage] = useState("");
   const [progress, setProgress] = useState(0);
 
@@ -31,28 +30,29 @@ function App() {
     setProgress(0);
 
     const steps = [
-      "Connecting to GitHub...",
+      "Connecting to GitHub servers...",
       "Scanning repositories...",
-      "Reading documentation...",
-      "Analyzing commit activity...",
-      "Evaluating project quality...",
+      "Reading README files...",
+      "Analyzing commit history...",
+      "Evaluating technical depth...",
       "Comparing with world-class developers...",
-      "Generating final recruiter report...",
+      "Generating AI recruiter verdict...",
     ];
 
     for (let i = 0; i < steps.length; i++) {
       setStage(steps[i]);
       setProgress((i + 1) * 14);
-      await new Promise((r) => setTimeout(r, 800));
+      await new Promise((r) => setTimeout(r, 700));
     }
 
     try {
       const res = await axios.post("http://localhost:5000/analyze", {
         profileUrl,
       });
+
       setData(res.data);
-    } catch {
-      alert("Backend error");
+    } catch (err) {
+      alert("Backend connection failed");
     }
 
     setLoading(false);
@@ -85,7 +85,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className="title">GitHub Portfolio Analyzer Pro</h1>
+      <h1 className="title">AI GitHub Recruiter Analyzer</h1>
 
       {/* INPUT */}
       <div className="inputBox">
@@ -97,7 +97,7 @@ function App() {
         <button onClick={analyze}>Analyze</button>
       </div>
 
-      {/* LOADING UI */}
+      {/* LOADING */}
       {loading && (
         <div className="card">
           <h2>AI Evaluating Profile</h2>
@@ -152,9 +152,61 @@ function App() {
             <Bar data={chartData} />
           </div>
 
+          {/* AI RECRUITER VERDICT */}
+{data && data.aiReview && (
+  <div className="card">
+    <h2>AI Recruiter Verdict</h2>
+
+    <div className="aiGrid">
+      <div className="aiBox">
+        <h3>Hiring Decision</h3>
+        <p className="highlight">{data.aiReview?.decision}</p>
+      </div>
+
+      <div className="aiBox">
+        <h3>Current Score</h3>
+        <p className="highlight">{data.aiReview?.score}/100</p>
+      </div>
+
+      <div className="aiBox">
+        <h3>Languages</h3>
+        <p>{data.aiReview?.languages || "N/A"}</p>
+      </div>
+    </div>
+
+    {/* Weakness */}
+    <div className="aiSection">
+      <h3>Key Weaknesses</h3>
+      <ul>
+        {(data.aiReview?.weaknesses || []).map((w, i) => (
+          <li key={i}>• {w}</li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Improvements */}
+    <div className="aiSection">
+      <h3>How to Improve</h3>
+      <ul>
+        {(data.aiReview?.improvements || []).map((i, idx) => (
+          <li key={idx}>• {i}</li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Next project */}
+    <div className="aiSection">
+      <h3>Best Project To Build Next</h3>
+      <p className="nextProject">{data.aiReview?.nextProject}</p>
+    </div>
+  </div>
+)}
+
+
+
           {/* WORLD COMPARISON */}
           <div className="card">
-            <h2>Comparison with World-Class GitHub</h2>
+            <h2>Comparison with World-Class Developers</h2>
 
             <table className="table">
               <thead>
@@ -178,7 +230,7 @@ function App() {
 
           {/* GAP IMPROVEMENTS */}
           <div className="card">
-            <h2>How to Reach World-Class Level</h2>
+            <h2>How to Reach Top 1%</h2>
             <ul className="suggestions">
               {data.gapSuggestions.map((s, i) => (
                 <li key={i}>{s}</li>
@@ -186,7 +238,7 @@ function App() {
             </ul>
           </div>
 
-          {/* RECRUITER SUGGESTIONS */}
+          {/* BASIC SUGGESTIONS */}
           <div className="card">
             <h2>Recruiter Suggestions</h2>
             <ul className="suggestions">

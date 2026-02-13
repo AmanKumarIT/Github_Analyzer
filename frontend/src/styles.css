@@ -184,3 +184,41 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.aiGrid {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.aiBox {
+  flex: 1;
+  min-width: 180px;
+  background: #0d1117;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.highlight {
+  font-size: 18px;
+  font-weight: bold;
+  color: #3fb950;
+}
+
+.aiSection {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.aiSection h3 {
+  margin-bottom: 8px;
+}
+
+.nextProject {
+  background: #0d1117;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
