@@ -122,6 +122,16 @@ function calculateScore(data) {
     depth: { user: depthScore, world: world.depth },
   };
 
+  if (suggestions.length === 0) {
+  suggestions.push(
+    "Your GitHub profile is strong. Focus on building one standout flagship project."
+  );
+  suggestions.push(
+    "Maintain consistent commits and keep improving project documentation."
+  );
+}
+
+
   return {
     totalScore: Math.min(100, Math.floor(totalScore)),
     documentationScore,
